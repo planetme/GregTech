@@ -164,48 +164,48 @@ public class WorldGenRegistry {
             Files.createDirectories(bedrockVeinPath);
 
         // Checks if the dimension file exists. If not, creates the file and extracts the defaults from the mod jar
-        if (!Files.exists(dimensionsFile)) {
-            Files.createFile(dimensionsFile);
-            extractJarVeinDefinitions(configPath, dimensionsFile);
-        }
-
-        if (Files.exists(jarFileExtractLock)) {
-            JsonObject extractLock = FileUtility.tryExtractFromFile(jarFileExtractLock);
-            if (extractLock != null) {
-                boolean needsUpdate = false;
-                if (extractLock.get("fluidVersion").getAsInt() != FLUID_VEIN_VERSION) {
-                    extractJarVeinDefinitions(configPath, bedrockVeinPath);
-                    needsUpdate = true;
-                }
-                if (extractLock.get("veinVersion").getAsInt() != ORE_VEIN_VERSION) {
-                    extractJarVeinDefinitions(configPath, veinPath);
-                    needsUpdate = true;
-                }
-                // bump the version(s) on the lock file if needed
-                if (needsUpdate) {
-                    extractJarVeinDefinitions(configPath, jarFileExtractLock);
-                }
-            }
-        } else {
-            // force an override here as needed for updating legacy config blocks
-            if (FLUID_VEIN_VERSION > 1) {
-                extractJarVeinDefinitions(configPath, bedrockVeinPath);
-            }
-            if (ORE_VEIN_VERSION > 1) {
-                extractJarVeinDefinitions(configPath, veinPath);
-            }
-            // create extraction lock since it doesn't exist
-            Files.createFile(jarFileExtractLock);
-            extractJarVeinDefinitions(configPath, jarFileExtractLock);
-        }
-
-        //attempt extraction if worldgen root directory is empty
-        if (!Files.list(worldgenRootPath.resolve(veinPath)).findFirst().isPresent()) {
-            extractJarVeinDefinitions(configPath, veinPath);
-        }
-        if (!Files.list(worldgenRootPath.resolve(bedrockVeinPath)).findFirst().isPresent()) {
-            extractJarVeinDefinitions(configPath, bedrockVeinPath);
-        }
+//        if (!Files.exists(dimensionsFile)) {
+//            Files.createFile(dimensionsFile);
+//            extractJarVeinDefinitions(configPath, dimensionsFile);
+//        }
+//
+//        if (Files.exists(jarFileExtractLock)) {
+//            JsonObject extractLock = FileUtility.tryExtractFromFile(jarFileExtractLock);
+//            if (extractLock != null) {
+//                boolean needsUpdate = false;
+//                if (extractLock.get("fluidVersion").getAsInt() != FLUID_VEIN_VERSION) {
+//                    extractJarVeinDefinitions(configPath, bedrockVeinPath);
+//                    needsUpdate = true;
+//                }
+//                if (extractLock.get("veinVersion").getAsInt() != ORE_VEIN_VERSION) {
+//                    extractJarVeinDefinitions(configPath, veinPath);
+//                    needsUpdate = true;
+//                }
+//                // bump the version(s) on the lock file if needed
+//                if (needsUpdate) {
+//                    extractJarVeinDefinitions(configPath, jarFileExtractLock);
+//                }
+//            }
+//        } else {
+//            // force an override here as needed for updating legacy config blocks
+//            if (FLUID_VEIN_VERSION > 1) {
+//                extractJarVeinDefinitions(configPath, bedrockVeinPath);
+//            }
+//            if (ORE_VEIN_VERSION > 1) {
+//                extractJarVeinDefinitions(configPath, veinPath);
+//            }
+//            // create extraction lock since it doesn't exist
+//            Files.createFile(jarFileExtractLock);
+//            extractJarVeinDefinitions(configPath, jarFileExtractLock);
+//        }
+//
+//        //attempt extraction if worldgen root directory is empty
+//        if (!Files.list(worldgenRootPath.resolve(veinPath)).findFirst().isPresent()) {
+//            extractJarVeinDefinitions(configPath, veinPath);
+//        }
+//        if (!Files.list(worldgenRootPath.resolve(bedrockVeinPath)).findFirst().isPresent()) {
+//            extractJarVeinDefinitions(configPath, bedrockVeinPath);
+//        }
 
         // Read the dimensions name from the dimensions file
         gatherNamedDimensions(dimensionsFile);
