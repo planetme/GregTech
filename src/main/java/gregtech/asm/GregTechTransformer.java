@@ -121,7 +121,7 @@ public class GregTechTransformer implements IClassTransformer, Opcodes {
                 ClassReader classReader = new ClassReader(basicClass);
                 ClassWriter classWriter = new ClassWriter(0);
 
-                // fix NC recipe compat different depending on overhaul vs underhaul
+                // remove NC recipe compat differently depending on overhaul vs normal
                 ModContainer container = Loader.instance().getIndexedModList().get(GTValues.MODID_NC);
                 if (container.getVersion().contains("2o")) { // overhauled
                     classReader.accept(new TargetClassVisitor(classWriter, NuclearCraftRecipeHelperVisitor.TARGET_METHOD_NCO, NuclearCraftRecipeHelperVisitor::new), 0);
