@@ -129,6 +129,11 @@ dependencies {
     // Left as compileOnlyApi by default for a slimmer default instance.
     compileOnlyApi rfg.deobf("curse.maven:ae2-extended-life-${ae2_pid}:${ae2_fid}")
     compileOnlyApi rfg.deobf("curse.maven:opencomputers-${oc_pid}:${oc_fid}")
+    // Only enable one of these at a time!!
+    // Additionally, due to their builds requiring Forge 2860, these cannot be run in-game.
+    // Instead, they must be tested with a build in Prism or similar.
+    compileOnlyApi rfg.deobf("curse.maven:nuclearcraft-${nc_pid}:${nc_fid}")
+    //compileOnlyApi rfg.deobf("curse.maven:nuclearcraft-overhauled-${nco_pid}:${nco_fid}")
 
     // Compile-Time Dependencies
     annotationProcessor "com.github.bsideup.jabel:jabel-javac-plugin:${jabel_version}"
