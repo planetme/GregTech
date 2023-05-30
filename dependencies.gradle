@@ -1,4 +1,4 @@
-// file:noinspection DependencyNotationArgument
+//file:noinspection DependencyNotationArgument
 // TODO remove when fixed in RFG ^
 dependencies {
     // Hard Dependencies
@@ -14,8 +14,8 @@ dependencies {
 
     // use a local jar for GroovyScript to avoid a bug from Mixin and ForgeGradle,
     // causing crashes at run-time when deobfuscated
-    implementation files("libs/groovyscript-0.4.0.jar")
-    //implementation fg.deobf("curse.maven:groovyscript-${grs_pid}:${grs_fid}")
+//    implementation files("libs/groovyscript-0.4.0.jar")
+    implementation rfg.deobf("curse.maven:groovyscript-${grs_pid}:${grs_fid}-sources-${grs_sources_fid}")
 
     // Can change any of the below from compileOnlyApi -> implementation to test them in-game.
     // Left as compileOnlyApi by default for a slimmer default instance.
@@ -53,12 +53,13 @@ dependencies {
     implementation "zone.rong:mixinbooter:${mixinbooter_version}"
 
     // Mixin dependencies
-    api("org.spongepowered:mixin:${mixin_version}") {
-        transitive = false
-    }
-    annotationProcessor("org.spongepowered:mixin:${mixin_version}") {
-        transitive = false
-    }
+    // causes the wrong mixin version to load at runtime if uncommented
+//    api("org.spongepowered:mixin:${mixin_version}") {
+//        transitive = false
+////    }
+//    annotationProcessor("org.spongepowered:mixin:${mixin_version}") {
+//        transitive = false
+//    }
 
     annotationProcessor "org.ow2.asm:asm-debug-all:${asm_debug_version}"
     annotationProcessor "com.google.guava:guava:${guava_version}-jre"
