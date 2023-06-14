@@ -18,6 +18,7 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.ore.StoneType;
+import gregtech.api.unification.ore.handler.OreProcessorHandler;
 import gregtech.api.util.BaseCreativeTab;
 import gregtech.api.util.GTControlledRegistry;
 import gregtech.api.util.GTLog;
@@ -60,6 +61,9 @@ public class GregTechAPI {
     /** Will be available at the Pre-Initialization stage */
     private static boolean highTier;
     private static boolean highTierInitialized;
+
+    /** Will be available at the Pre-Initialization stage */
+    public static OreProcessorHandler oreProcessorHandler;
 
     public static final GTControlledRegistry<ResourceLocation, MetaTileEntity> MTE_REGISTRY = new GTControlledRegistry<>(Short.MAX_VALUE);
     public static final GTControlledRegistry<ResourceLocation, UIFactory> UI_FACTORY_REGISTRY = new GTControlledRegistry<>(Short.MAX_VALUE);

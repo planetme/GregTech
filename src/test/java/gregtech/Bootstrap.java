@@ -5,6 +5,7 @@ import gregtech.api.GregTechAPI;
 import gregtech.api.fluids.MetaFluids;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
+import gregtech.api.unification.ore.handler.OreProcessorHandler;
 import gregtech.common.items.MetaItems;
 import gregtech.modules.ModuleManager;
 import net.minecraft.client.resources.I18n;
@@ -63,7 +64,8 @@ public final class Bootstrap {
         Materials.register();
         GregTechAPI.MATERIAL_REGISTRY.freeze();
 
-        OrePrefix.runMaterialHandlers();
+        GregTechAPI.oreProcessorHandler = OreProcessorHandler.getInstance();
+        OrePrefix.runMaterialHandlers(false);
         MetaFluids.init();
         MetaItems.init();
         bootstrapped = true;

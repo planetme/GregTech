@@ -18,6 +18,7 @@ import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.recipeproperties.TemperatureProperty;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.ore.handler.OreProcessorHandler;
 import gregtech.api.util.CapesRegistry;
 import gregtech.api.util.VirtualTankRegistry;
 import gregtech.api.util.input.KeyBind;
@@ -52,7 +53,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 import net.minecraftforge.classloading.FMLForgePlugin;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.LoaderException;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
@@ -130,6 +133,8 @@ public class CoreModule implements IGregTechModule {
         /* End Material Registration */
 
         OreDictUnifier.init();
+
+        GregTechAPI.oreProcessorHandler = OreProcessorHandler.getInstance();
 
         MetaBlocks.init();
         MetaItems.init();
