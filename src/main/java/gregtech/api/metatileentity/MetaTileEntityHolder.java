@@ -41,6 +41,7 @@ import net.minecraftforge.fml.common.Optional.InterfaceList;
 import net.minecraftforge.fml.common.Optional.Method;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -260,7 +261,7 @@ public class MetaTileEntityHolder extends TickableTileEntityBase implements IGre
     }
 
     @Override
-    public void writeInitialSyncData(PacketBuffer buf) {
+    public void writeInitialSyncData(@NotNull PacketBuffer buf) {
         buf.writeString(getName());
         if (metaTileEntity != null) {
             buf.writeBoolean(true);
@@ -270,7 +271,7 @@ public class MetaTileEntityHolder extends TickableTileEntityBase implements IGre
     }
 
     @Override
-    public void receiveInitialSyncData(PacketBuffer buf) {
+    public void receiveInitialSyncData(@NotNull PacketBuffer buf) {
         setCustomName(buf.readString(Short.MAX_VALUE));
         if (buf.readBoolean()) {
             receiveMTEInitializationData(buf);
@@ -278,7 +279,7 @@ public class MetaTileEntityHolder extends TickableTileEntityBase implements IGre
     }
 
     @Override
-    public void receiveCustomData(int discriminator, PacketBuffer buffer) {
+    public void receiveCustomData(int discriminator, @NotNull PacketBuffer buffer) {
         if (discriminator == INITIALIZE_MTE) {
             receiveMTEInitializationData(buffer);
         } else if (metaTileEntity != null) {
@@ -291,7 +292,7 @@ public class MetaTileEntityHolder extends TickableTileEntityBase implements IGre
      *
      * @param buf the buffer to read data from
      */
-    private void receiveMTEInitializationData(@Nonnull PacketBuffer buf) {
+    private void receiveMTEInitializationData(@NotNull PacketBuffer buf) {
         int metaTileEntityId = buf.readVarInt();
         setMetaTileEntity(GregTechAPI.MTE_REGISTRY.getObjectById(metaTileEntityId));
         this.metaTileEntity.onPlacement();

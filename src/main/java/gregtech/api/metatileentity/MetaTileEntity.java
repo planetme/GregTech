@@ -28,6 +28,7 @@ import gregtech.api.gui.ModularUI;
 import gregtech.api.items.toolitem.ToolClasses;
 import gregtech.api.items.toolitem.ToolHelper;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.interfaces.ISyncedTileEntity;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.GTLog;
 import gregtech.api.util.GTTransferUtils;
@@ -75,6 +76,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -87,7 +89,7 @@ import java.util.function.Consumer;
 
 import static gregtech.api.capability.GregtechDataCodes.*;
 
-public abstract class MetaTileEntity implements ICoverable, IVoidable {
+public abstract class MetaTileEntity implements ISyncedTileEntity, ICoverable, IVoidable {
 
     public static final IndexedCuboid6 FULL_CUBE_COLLISION = new IndexedCuboid6(null, Cuboid6.full);
     public static final String TAG_KEY_PAINTING_COLOR = "PaintingColor";
@@ -177,7 +179,8 @@ public abstract class MetaTileEntity implements ICoverable, IVoidable {
         return holder == null ? 0L : holder.getOffsetTimer();
     }
 
-    public void writeCustomData(int discriminator, Consumer<PacketBuffer> dataWriter) {
+    @Override
+    public final void writeCustomData(int discriminator, @NotNull Consumer<@NotNull PacketBuffer> dataWriter) {
         if (holder != null) {
             holder.writeCustomData(discriminator, dataWriter);
         }
@@ -893,13 +896,14 @@ public abstract class MetaTileEntity implements ICoverable, IVoidable {
         return 1;
     }
 
-    public void writeInitialSyncData(PacketBuffer buf) {
+    @Override
+    public void writeInitialSyncData(@NotNull PacketBuffer buf) {
         buf.writeByte(this.frontFacing.getIndex());
         buf.writeInt(this.paintingColor);
         buf.writeShort(this.mteTraitByNetworkId.size());
         for (Int2ObjectMap.Entry<MTETrait> entry : mteTraitByNetworkId.int2ObjectEntrySet()) {
             buf.writeVarInt(entry.getIntKey());
-            entry.getValue().writeInitialData(buf);
+            entry.getValue().writeInitialSyncData(buf);
         }
         CoverIO.writeCoverSyncData(buf, this);
         buf.writeBoolean(isFragile);
@@ -910,7 +914,8 @@ public abstract class MetaTileEntity implements ICoverable, IVoidable {
         return this.paintingColor != -1;
     }
 
-    public void receiveInitialSyncData(PacketBuffer buf) {
+    @Override
+    public void receiveInitialSyncData(@NotNull PacketBuffer buf) {
         this.frontFacing = EnumFacing.VALUES[buf.readByte()];
         this.paintingColor = buf.readInt();
         int amountOfTraits = buf.readShort();
@@ -942,7 +947,8 @@ public abstract class MetaTileEntity implements ICoverable, IVoidable {
         });
     }
 
-    public void receiveCustomData(int dataId, PacketBuffer buf) {
+    @Override
+    public void receiveCustomData(int dataId, @NotNull PacketBuffer buf) {
         if (dataId == UPDATE_FRONT_FACING) {
             this.frontFacing = EnumFacing.VALUES[buf.readByte()];
             scheduleRenderUpdate();
