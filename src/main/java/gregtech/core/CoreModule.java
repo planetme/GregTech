@@ -35,6 +35,7 @@ import gregtech.common.command.CommandShaders;
 import gregtech.common.command.worldgen.CommandWorldgen;
 import gregtech.common.covers.CoverBehaviors;
 import gregtech.common.covers.filter.FilterTypeRegistry;
+import gregtech.common.items.ArmorItems;
 import gregtech.common.items.MetaItems;
 import gregtech.common.items.ToolItems;
 import gregtech.common.metatileentities.MetaTileEntities;
@@ -134,6 +135,8 @@ public class CoreModule implements IGregTechModule {
         MetaBlocks.init();
         MetaItems.init();
         ToolItems.init();
+        ArmorItems.init();
+        ArmorItems.initLegacyArmor();
         MetaFluids.init();
 
         /* Start MetaTileEntity Registration */
@@ -165,7 +168,8 @@ public class CoreModule implements IGregTechModule {
         GregTechAPI.networkHandler.registerPacket(PacketClipboardUIWidgetUpdate.class);
         GregTechAPI.networkHandler.registerPacket(PacketPluginSynced.class);
         GregTechAPI.networkHandler.registerPacket(PacketRecoverMTE.class);
-        GregTechAPI.networkHandler.registerPacket(PacketKeysPressed.class);
+        GregTechAPI.networkHandler.registerPacket(PacketKeysDown.class);
+        GregTechAPI.networkHandler.registerPacket(PacketKeyPressed.class);
         GregTechAPI.networkHandler.registerPacket(PacketFluidVeinList.class);
         GregTechAPI.networkHandler.registerPacket(PacketNotifyCapeChange.class);
         GregTechAPI.networkHandler.registerPacket(PacketReloadShaders.class);

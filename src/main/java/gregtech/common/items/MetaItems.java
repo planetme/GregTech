@@ -10,7 +10,6 @@ import gregtech.api.unification.material.MarkerMaterial;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.util.GTLog;
 import gregtech.client.renderer.handler.FacadeRenderer;
-import gregtech.common.items.armor.MetaArmor;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.EnumDyeColor;
@@ -602,8 +601,6 @@ public final class MetaItems {
     public static void init() {
         MetaItem1 first = new MetaItem1();
         first.setRegistryName("meta_item_1");
-        MetaArmor armor = new MetaArmor();
-        armor.setRegistryName("gt_armor");
         for (OrePrefix prefix : orePrefixes) {
             String regName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, prefix.name());
             MetaPrefixItem metaOrePrefix = new MetaPrefixItem(prefix);
