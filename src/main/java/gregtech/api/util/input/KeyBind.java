@@ -21,9 +21,7 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.WeakHashMap;
+import java.util.*;
 import java.util.function.Supplier;
 
 public enum KeyBind {
@@ -87,6 +85,7 @@ public enum KeyBind {
     private boolean isPressed, isKeyDown;
 
     private final WeakHashMap<EntityPlayerMP, MutablePair<Boolean, Boolean>> mapping = new WeakHashMap<>();
+    private final WeakHashMap<EntityPlayerMP, Set<IKeyPressedListener>> listeners = new WeakHashMap<>();
 
     // For Vanilla/Other Mod keybinds
     // Double Supplier to keep client classes from loading
@@ -132,6 +131,12 @@ public enum KeyBind {
         } else {
             pair.left = pressed;
             pair.right = keyDown;
+            if (pressed) {
+                Set<IKeyPressedListener> listenerSet = listeners.get(player);
+                if (listenerSet != null && !listenerSet.isEmpty()) {
+                    for (var listener : listenerSet) listener.onKeyPressed(player);
+                }
+            }
         }
     }
 
@@ -150,6 +155,18 @@ public enum KeyBind {
         } else {
             MutablePair<Boolean, Boolean> pair = this.mapping.get((EntityPlayerMP) player);
             return pair != null && pair.right;
+        }
+    }
+
+    public void registerListener(EntityPlayerMP player, IKeyPressedListener listener) {
+        Set<IKeyPressedListener> listenerSet = listeners.computeIfAbsent(player, k -> new HashSet<>());
+        listenerSet.add(listener);
+    }
+
+    public void removeListener(EntityPlayerMP player, IKeyPressedListener listener) {
+        Set<IKeyPressedListener> listenerSet = listeners.get(player);
+        if (listenerSet != null) {
+            listenerSet.remove(listener);
         }
     }
 
