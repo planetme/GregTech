@@ -43,12 +43,6 @@ public class GregTechTransformer implements IClassTransformer, Opcodes {
                 classReader.accept(new TargetClassVisitor(classWriter, LayerCustomHeadVisitor.TARGET_METHOD, LayerCustomHeadVisitor::new), 0);
                 return classWriter.toByteArray();
             }
-            case SpecialArmorApplyVisitor.TARGET_CLASS_NAME: {
-                ClassReader classReader = new ClassReader(basicClass);
-                ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-                classReader.accept(new SpecialArmorClassVisitor(classWriter, SpecialArmorApplyVisitor.TARGET_METHOD, SpecialArmorApplyVisitor::new), 0);
-                return classWriter.toByteArray();
-            }
             case LayerArmorBaseVisitor.TARGET_CLASS_NAME: {
                 ClassReader classReader = new ClassReader(basicClass);
                 ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);

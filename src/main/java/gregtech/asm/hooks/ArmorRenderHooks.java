@@ -32,7 +32,6 @@ public class ArmorRenderHooks {
         ItemStack itemStack = entity.getItemStackFromSlot(slotIn);
 
         if (isArmorItem(itemStack, slotIn)) {
-            IArmorItem armorItem = (IArmorItem) itemStack.getItem();
             ModelBase armorModel = layer.getModelFromSlot(slotIn);
             if (armorModel instanceof ModelBiped) {
                 armorModel = ForgeHooksClient.getArmorModel(entity, itemStack, slotIn, (ModelBiped) armorModel);

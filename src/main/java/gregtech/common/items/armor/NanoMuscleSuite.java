@@ -27,7 +27,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class NanoMuscleSuite extends ArmorLogicSuite implements IStepAssist {
+@Deprecated
+public class NanoMuscleSuite extends ArmorLogicSuite {
 
     @SideOnly(Side.CLIENT)
     protected ArmorUtils.ModularHUD HUD;
@@ -80,8 +81,6 @@ public class NanoMuscleSuite extends ArmorLogicSuite implements IStepAssist {
                 --toggleTimer;
                 nbtData.setByte("toggleTimer", toggleTimer);
             }
-        } else if (SLOT == EntityEquipmentSlot.FEET) {
-            updateStepHeight(player);
         }
         player.inventoryContainer.detectAndSendChanges();
     }
@@ -137,11 +136,6 @@ public class NanoMuscleSuite extends ArmorLogicSuite implements IStepAssist {
     @Override
     public double getDamageAbsorption() {
         return 1.0D;
-    }
-
-    @Override
-    public float getHeatResistance() {
-        return 0.75f;
     }
 
     @SideOnly(Side.CLIENT)

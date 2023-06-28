@@ -24,6 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+@Deprecated
 public class Jetpack extends ArmorLogicSuite implements IJetpack {
 
     @SideOnly(Side.CLIENT)

@@ -21,6 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+@Deprecated
 public abstract class ArmorLogicSuite implements ISpecialArmorLogic, IItemHUDProvider {
 
     protected final int energyPerUse;
