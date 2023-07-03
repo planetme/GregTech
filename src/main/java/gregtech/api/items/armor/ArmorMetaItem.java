@@ -3,8 +3,6 @@ package gregtech.api.items.armor;
 import com.google.common.base.Preconditions;
 import gregtech.api.GregTechAPI;
 import gregtech.api.items.metaitem.MetaItem;
-import gregtech.api.items.metaitem.stats.IItemComponent;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 @Deprecated
-public class ArmorMetaItem<T extends ArmorMetaItem<?>.ArmorMetaValueItem> extends MetaItem<T> implements IArmorItem, ISpecialArmor {
+public class ArmorMetaItem<T extends ArmorMetaItem<?>.ArmorMetaValueItem> extends MetaItem<T> implements ISpecialArmor {
 
     public ArmorMetaItem() {
         super((short) 0);
@@ -108,17 +106,6 @@ public class ArmorMetaItem<T extends ArmorMetaItem<?>.ArmorMetaValueItem> extend
             Preconditions.checkNotNull(armorLogic, "Cannot set ArmorLogic to null");
             this.armorLogic = armorLogic;
             return this;
-        }
-
-        @Override
-        public ArmorMetaValueItem addComponents(IItemComponent... stats) {
-            super.addComponents(stats);
-            return this;
-        }
-
-        @Override
-        public ArmorMetaValueItem setModelAmount(int modelAmount) {
-            return (ArmorMetaValueItem) super.setModelAmount(modelAmount);
         }
 
         @Override
