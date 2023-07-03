@@ -98,7 +98,7 @@ public interface IJetpack {
                     }
 
                 }
-                ArmorUtils.spawnParticle(player.getEntityWorld(), player, getParticle(), -0.6D);
+                //ArmorUtils.spawnParticle(player.getEntityWorld(), player, getParticle(), -0.6D);
             }
         }
     }
