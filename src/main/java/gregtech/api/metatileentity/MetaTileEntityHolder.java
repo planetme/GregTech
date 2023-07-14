@@ -1,5 +1,6 @@
 package gregtech.api.metatileentity;
 
+import appeng.api.movable.IMovableTile;
 import appeng.api.networking.IGridNode;
 import appeng.api.networking.security.IActionHost;
 import appeng.api.util.AECableType;
@@ -53,7 +54,7 @@ import static gregtech.api.capability.GregtechDataCodes.INITIALIZE_MTE;
         @Interface(iface = "appeng.api.networking.security.IActionHost", modid = GTValues.MODID_APPENG, striprefs = true),
         @Interface(iface = "appeng.me.helpers.IGridProxyable", modid = GTValues.MODID_APPENG, striprefs = true),
 })
-public class MetaTileEntityHolder extends TickableTileEntityBase implements IGregTechTileEntity, IUIHolder, IWorldNameable, IActionHost, IGridProxyable {
+public class MetaTileEntityHolder extends TickableTileEntityBase implements IGregTechTileEntity, IUIHolder, IWorldNameable, IActionHost, IGridProxyable, IMovableTile {
 
     MetaTileEntity metaTileEntity;
     private boolean needToUpdateLightning = false;
@@ -536,6 +537,22 @@ public class MetaTileEntityHolder extends TickableTileEntityBase implements IGre
         AENetworkProxy proxy = getProxy();
         if (proxy != null) {
             proxy.invalidate();
+        }
+    }
+
+    @Method(modid = GTValues.MODID_APPENG)
+    @Override
+    public boolean prepareToMove() {
+        this.invalidate();
+        return true;
+    }
+
+    @Method(modid = GTValues.MODID_APPENG)
+    @Override
+    public void doneMoving() {
+        if (metaTileEntity != null) {
+            MTETrait trait = metaTileEntity.getMTETrait("ABSTRACT_WORKABLE_TRAIT");
+            trait.
         }
     }
 }
