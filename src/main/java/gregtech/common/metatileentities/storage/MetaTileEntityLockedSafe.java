@@ -43,6 +43,7 @@ import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -403,7 +404,7 @@ public class MetaTileEntityLockedSafe extends MetaTileEntity implements IFastRen
     }
 
     @Override
-    public boolean canPlaceCoverOnSide(EnumFacing side) {
+    public boolean canPlaceCoverOnSide(@NotNull EnumFacing side) {
         return false;
     }
 
