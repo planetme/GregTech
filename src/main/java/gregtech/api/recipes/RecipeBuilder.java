@@ -531,8 +531,8 @@ public class RecipeBuilder<R extends RecipeBuilder<R>> {
         if (stack == null || stack.isEmpty()) {
             return (R) this;
         }
-        if (0 >= chance || chance > Recipe.getMaxChancedValue()) {
-            GTLog.logger.error("Chance cannot be less or equal to 0 or more than {}. Actual: {}.", Recipe.getMaxChancedValue(), chance);
+        if (0 >= chance || chance > ChancedOutputLogic.getMaxChancedValue()) {
+            GTLog.logger.error("Chance cannot be less or equal to 0 or more than {}. Actual: {}.", ChancedOutputLogic.getMaxChancedValue(), chance);
             GTLog.logger.error("Stacktrace:", new IllegalArgumentException());
             recipeStatus = EnumValidationResult.INVALID;
             return (R) this;
@@ -578,8 +578,8 @@ public class RecipeBuilder<R extends RecipeBuilder<R>> {
         if (stack == null || stack.amount == 0) {
             return (R) this;
         }
-        if (0 >= chance || chance > Recipe.getMaxChancedValue()) {
-            GTLog.logger.error("Chance cannot be less or equal to 0 or more than {}. Actual: {}.", Recipe.getMaxChancedValue(), chance);
+        if (0 >= chance || chance > ChancedOutputLogic.getMaxChancedValue()) {
+            GTLog.logger.error("Chance cannot be less or equal to 0 or more than {}. Actual: {}.", ChancedOutputLogic.getMaxChancedValue(), chance);
             GTLog.logger.error("Stacktrace:", new IllegalArgumentException());
             recipeStatus = EnumValidationResult.INVALID;
             return (R) this;
