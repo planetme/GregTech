@@ -20,10 +20,7 @@ import gregtech.api.capability.GregtechTileCapabilities;
 import gregtech.api.capability.IControllable;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.capability.impl.*;
-import gregtech.api.cover.CoverBehavior;
-import gregtech.api.cover.CoverIO;
-import gregtech.api.cover.ICoverable;
-import gregtech.api.cover2.*;
+import gregtech.api.cover.*;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.items.toolitem.ToolClasses;
 import gregtech.api.items.toolitem.ToolHelper;
@@ -117,7 +114,6 @@ public abstract class MetaTileEntity implements CoverHolder, IVoidable {
 
     private boolean wasExploded = false;
 
-    private final CoverBehavior[] coverBehaviors = new CoverBehavior[6];
     private final EnumMap<EnumFacing, Cover> covers = new EnumMap<>(EnumFacing.class);
 
     protected List<IItemHandlerModifiable> notifiedItemOutputList = new ArrayList<>();
@@ -478,7 +474,7 @@ public abstract class MetaTileEntity implements CoverHolder, IVoidable {
      */
     public final boolean onToolClick(EntityPlayer playerIn, @Nonnull Set<String> toolClasses, EnumHand hand, CuboidRayTraceResult hitResult)  {
         // the side hit from the machine grid
-        EnumFacing gridSideHit = ICoverable.determineGridSideHit(hitResult);
+        EnumFacing gridSideHit = CoverRayTracer.determineGridSideHit(hitResult);
         Cover cover = gridSideHit == null ? null : getCoverAtSide(gridSideHit);
 
         // Prioritize covers where they apply (Screwdriver, Soft Mallet)
@@ -931,7 +927,7 @@ public abstract class MetaTileEntity implements CoverHolder, IVoidable {
         } else if (dataId == COVER_REMOVED_MTE) {
             //cover removed event
             EnumFacing placementSide = EnumFacing.VALUES[buf.readByte()];
-            this.coverBehaviors[placementSide.getIndex()] = null;
+            this.covers.remove(placementSide);
             onCoverPlacementUpdate();
             scheduleRenderUpdate();
         } else if (dataId == UPDATE_COVER_DATA_MTE) {
@@ -1187,7 +1183,7 @@ public abstract class MetaTileEntity implements CoverHolder, IVoidable {
             data.setTag(mteTrait.getName(), mteTrait.serializeNBT());
         }
 
-        CoverIO.writeCoverNBT(data, (side) -> coverBehaviors[side.getIndex()]);
+        CoverSaveHandler.writeCoverNBT(data, this);
 
         data.setBoolean(TAG_KEY_FRAGILE, isFragile);
         data.setBoolean(TAG_KEY_MUFFLED, muffled);
@@ -1214,7 +1210,7 @@ public abstract class MetaTileEntity implements CoverHolder, IVoidable {
             mteTrait.deserializeNBT(traitCompound);
         }
 
-        CoverSaveHandler.readCoverNBT(data, this);
+        CoverSaveHandler.readCoverNBT(data, this, covers::put);
         this.isFragile = data.getBoolean(TAG_KEY_FRAGILE);
         this.muffled = data.getBoolean(TAG_KEY_MUFFLED);
     }

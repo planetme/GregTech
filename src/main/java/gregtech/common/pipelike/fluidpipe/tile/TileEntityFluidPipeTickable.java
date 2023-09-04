@@ -2,7 +2,7 @@ package gregtech.common.pipelike.fluidpipe.tile;
 
 import gregtech.api.GTValues;
 import gregtech.api.capability.IPropertyFluidFilter;
-import gregtech.api.cover2.Cover;
+import gregtech.api.cover.Cover;
 import gregtech.api.fluids.MaterialFluid;
 import gregtech.api.fluids.fluidType.FluidTypes;
 import gregtech.api.metatileentity.IDataInfoProvider;

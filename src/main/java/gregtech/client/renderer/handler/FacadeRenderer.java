@@ -11,7 +11,7 @@ import codechicken.lib.vec.Matrix4;
 import codechicken.lib.vec.Vector3;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import gregtech.api.cover.ICoverable;
+import gregtech.api.cover.CoverUtil;
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.util.ModCompatibility;
 import gregtech.client.model.pipeline.VertexLighterFlatSpecial;
@@ -82,7 +82,7 @@ public class FacadeRenderer implements IItemRenderer {
         renderState.reset();
         renderState.startDrawing(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
         try {
-            FacadeRenderer.renderItemCover(renderState, EnumFacing.NORTH.getIndex(), facadeStack, ICoverable.getCoverPlateBox(EnumFacing.NORTH, 2.0 / 16.0));
+            FacadeRenderer.renderItemCover(renderState, EnumFacing.NORTH.getIndex(), facadeStack, CoverUtil.getCoverPlateBox(EnumFacing.NORTH, 2.0 / 16.0));
         } catch (Throwable ignored) {
         }
         renderState.draw();
