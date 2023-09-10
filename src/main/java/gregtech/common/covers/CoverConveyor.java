@@ -77,7 +77,7 @@ public class CoverConveyor extends CoverBase implements CoverWithUI, ITickable, 
 
     public void setTransferRate(int transferRate) {
         this.transferRate = transferRate;
-        CoverableView coverable = getCoverable();
+        CoverableView coverable = getCoverableView();
         coverable.markDirty();
 
         if (coverable.getWorld() != null && coverable.getWorld().isRemote) {
@@ -105,7 +105,7 @@ public class CoverConveyor extends CoverBase implements CoverWithUI, ITickable, 
     public void setConveyorMode(ConveyorMode conveyorMode) {
         this.conveyorMode = conveyorMode;
         writeCustomData(1, buf -> buf.writeEnumValue(conveyorMode));
-        getCoverable().markDirty();
+        getCoverableView().markDirty();
     }
 
     public ConveyorMode getConveyorMode() {
@@ -118,7 +118,7 @@ public class CoverConveyor extends CoverBase implements CoverWithUI, ITickable, 
 
     public void setDistributionMode(DistributionMode distributionMode) {
         this.distributionMode = distributionMode;
-        getCoverable().markDirty();
+        getCoverableView().markDirty();
     }
 
     public ManualImportExportMode getManualImportExportMode() {
@@ -127,7 +127,7 @@ public class CoverConveyor extends CoverBase implements CoverWithUI, ITickable, 
 
     protected void setManualImportExportMode(ManualImportExportMode manualImportExportMode) {
         this.manualImportExportMode = manualImportExportMode;
-        getCoverable().markDirty();
+        getCoverableView().markDirty();
     }
 
     public ItemFilterContainer getItemFilterContainer() {
@@ -136,7 +136,7 @@ public class CoverConveyor extends CoverBase implements CoverWithUI, ITickable, 
 
     @Override
     public void update() {
-        CoverableView coverable = getCoverable();
+        CoverableView coverable = getCoverableView();
         long timer = coverable.getOffsetTimer();
         if (timer % 5 == 0 && isWorkingAllowed && itemsLeftToTransferLastSecond > 0) {
             EnumFacing side = getAttachedSide();
@@ -421,7 +421,7 @@ public class CoverConveyor extends CoverBase implements CoverWithUI, ITickable, 
     public void onRemoval() {
         NonNullList<ItemStack> drops = NonNullList.create();
         MetaTileEntity.clearInventory(drops, itemFilterContainer.getFilterInventory());
-        CoverableView coverable = getCoverable();
+        CoverableView coverable = getCoverableView();
         for (ItemStack itemStack : drops) {
             Block.spawnAsEntity(coverable.getWorld(), coverable.getPos(), itemStack);
         }
@@ -438,7 +438,7 @@ public class CoverConveyor extends CoverBase implements CoverWithUI, ITickable, 
 
     @Override
     public @NotNull EnumActionResult onScrewdriverClick(@NotNull EntityPlayer playerIn, @NotNull EnumHand hand, @NotNull CuboidRayTraceResult hitResult) {
-        if (!getCoverable().getWorld().isRemote) {
+        if (!getCoverableView().getWorld().isRemote) {
             openUI((EntityPlayerMP) playerIn);
         }
         return EnumActionResult.SUCCESS;
@@ -498,7 +498,7 @@ public class CoverConveyor extends CoverBase implements CoverWithUI, ITickable, 
                 ManualImportExportMode.class, this::getManualImportExportMode, this::setManualImportExportMode)
                 .setTooltipHoverString("cover.universal.manual_import_export.mode.description"));
 
-        CoverableView coverable = getCoverable();
+        CoverableView coverable = getCoverableView();
         if (coverable.getWorld().getTileEntity(coverable.getPos()) instanceof TileEntityItemPipe ||
                 coverable.getWorld().getTileEntity(coverable.getPos().offset(getAttachedSide())) instanceof TileEntityItemPipe) {
             final ImageCycleButtonWidget distributionModeButton = new ImageCycleButtonWidget(149, 166, 20, 20, GuiTextures.DISTRIBUTION_MODE, 3,
@@ -531,7 +531,7 @@ public class CoverConveyor extends CoverBase implements CoverWithUI, ITickable, 
         super.readCustomData(discriminator, buf);
         if (discriminator == 1) {
             this.conveyorMode = buf.readEnumValue(ConveyorMode.class);
-            getCoverable().scheduleRenderUpdate();
+            getCoverableView().scheduleRenderUpdate();
         }
     }
 
