@@ -49,6 +49,9 @@ public class GregtechDataCodes {
     // Adjustable Transformer, Adjustable Energy Hatch, Diode
     public static final int AMP_INDEX = 101;
 
+    // Facade Cover
+    public static final int UPDATE_FACADE_STACK = 17;
+
     // Pipe implementation update codes
     public static final int UPDATE_INSULATION_COLOR = -1;
     public static final int UPDATE_CONNECTIONS = -2;
